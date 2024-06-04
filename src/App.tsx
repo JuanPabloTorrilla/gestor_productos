@@ -1,12 +1,8 @@
-import { useState } from 'react'
 import './App.css'
-import { Modal, ButtonGroup, ClickAwayListener,TextField, Box, Container, Toolbar, Typography, AppBar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Card, CardActions, CardContent, CardMedia, Button} from '@mui/material'
-import { ShoppingCartCheckout, ShoppingCart } from '@mui/icons-material';
-import {carrito} from './components/Carrito'
+import {  Box, Container, List, ListItem,} from '@mui/material'
 import {Header} from './components/Header'
 import {Productos} from './components/Productos'
-import { ProductProvider } from './context/ProductContext.jsx'
-import { CarritoModal } from './components/CarritoModal'
+import { ProductProvider } from './context/ProductContext'
 import { Detail } from './components/Detail'
 import { Actions } from './components/Actions'
 
@@ -16,7 +12,7 @@ function App() {
     <ProductProvider>
       <div id="titlebar">
         <div id="titlebar-center">
-            <span>Gestión de Productos</span>
+            <span id="titlebar-text">Gestión de Productos</span>
         </div>
         <div id="titlebar-btn">
           <div id="titlebar-left">
@@ -27,17 +23,17 @@ function App() {
           </div>
         </div>
       </div>
-      <Header />
+      <Header children = ""/>
       <Container sx= {{ display:'flex', position:'fixed', top: 180, left: 0, alignItems:'flex-start', justifyContent:'space-between'}}>
-        <Productos />
+        <Productos products={[]} />
         <Container>
-      <List sx= {{display:'flex', flexDirection:'column'}}>
-          <ListItem >
-            <Actions />
-          </ListItem>
-        </List>
-        <Detail />
-      </Container>
+          <List>
+              <ListItem>
+                <Actions productId=''/>
+              </ListItem>
+          </List>
+          <Detail productId=''/>
+        </Container>
       </Container>
       <Box sx={{position:'absolute',background:'#1976d2',bottom:0, width: '100%', color:'white', textAlign:'center'}}>
             <p>Este software ha sido desarrollado por asdad. Para solicitar soluciones informáticas contáctese con asdas@asdasd.com</p>

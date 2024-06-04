@@ -13,10 +13,11 @@ export const Detail = ()=>{
     return(
         <Card sx={{ maxWidth: 345 }}>
             {product &&(<div>
-            <CardMedia
-                sx={{ height: 140 }}
-                image="/static/images/cards/contemplative-reptile.jpg"
-                title="green iguana"
+            <CardMedia           
+                sx={{ height: 100, objectFit: 'contain' }}
+                image="src/assets/react.svg"
+                title="react"
+                background-size="contain"
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

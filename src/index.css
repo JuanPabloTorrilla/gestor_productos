@@ -93,7 +93,7 @@ p{
 /* Estilos para los botones */
 #minimize-btn,
 #close-btn {
-  background-color: green;
+  background-color: rgb(255, 0, 0);
   border: none;
   color: white;
   font-size: 16px;
@@ -104,12 +104,15 @@ p{
   margin:auto
 }
 #minimize-btn:hover{
-  background-color: rgb(255, 10, 10); /* Cambia el color de fondo al pasar el ratón sobre los botones */
+  background-color: rgb(255, 255, 255, 0.1); /* Cambia el color de fondo al pasar el ratón sobre los botones */
 }
 #close-btn:hover {
   background-color: rgba(255, 255, 255, 0.1); /* Cambia el color de fondo al pasar el ratón sobre los botones */
 }
 #titlebar-btn{
+  width: 58px;
   display: flex;
+  justify-content: space-between;
   margin-right: 5px;
+  -webkit-app-region: no-drag;
 }

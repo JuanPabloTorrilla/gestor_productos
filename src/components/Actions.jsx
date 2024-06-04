@@ -8,8 +8,8 @@ import { pedidos } from './Pedidos';
 export function Actions(){
   const {carritoAbierto, abrirCarrito, cerrarCarrito} = useProduct()
     return(
-        <List sx= {{display:'flex', flexDirection:'row'}}>
-          <ListItem >
+        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
+          <ListItem sx={{justifyContent:'space-evenly'}}>
             <CarritoModal open= {carritoAbierto} onClose={()=>cerrarCarrito()}/>
             <ShoppingCart onClick={()=> abrirCarrito()}/>
             <ShoppingCartCheckout onClick={()=> {console.log(sessionStorage.getItem('pedido'))}}/>

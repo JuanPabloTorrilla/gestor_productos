@@ -5,6 +5,7 @@ import { useProduct } from "../context/productContext";
 class Carrito {
     constructor() {
         this.productos = JSON.parse(sessionStorage.getItem('carrito')) || [];
+        this.total = 0;
     }
 
     guardarCarrito() {
@@ -23,6 +24,7 @@ class Carrito {
 
     vaciarCarrito() {
         this.productos = [];
+        this.total = 0;
         this.guardarCarrito();
     }
 
@@ -37,6 +39,14 @@ class Carrito {
             }
         });
         return Object.values(productosAgrupados)
+    }
+
+    sumarTotal() {
+        this.total = 0
+        this.productos.forEach(producto => {
+            this.total += producto.price
+        });
+        return this.total
     }
 }
 
