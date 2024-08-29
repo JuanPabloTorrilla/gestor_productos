@@ -8,6 +8,15 @@ import { Actions } from './components/Actions'
 
 function App() {
 // Funciones de la App
+
+const handleMinimize = () => {
+  window.electronAPI.minimizeWindow();
+};
+
+const handleClose = () => {
+  window.electronAPI.closeWindow();
+}; 
+
   return (
     <ProductProvider>
       <div id="titlebar">
@@ -16,10 +25,10 @@ function App() {
         </div>
         <div id="titlebar-btn">
           <div id="titlebar-left">
-              <button id="minimize-btn">-</button>
+              <button onClick={handleMinimize} id="minimize-btn">-</button>
           </div>
           <div id="titlebar-right">
-              <button id="close-btn">x</button>
+              <button onClick={handleClose} id="close-btn">x</button>
           </div>
         </div>
       </div>

@@ -1,6 +1,11 @@
 "use strict";
 const electron = require("electron");
 electron.contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(electron.ipcRenderer));
+electron.contextBridge.exposeInMainWorld("electronAPI", {
+  minimizeWindow: () => electron.ipcRenderer.send("minimize-window"),
+  closeWindow: () => electron.ipcRenderer.send("close-window"),
+  openExternalLink: (url) => electron.shell.openExternal(url)
+});
 function withPrototype(obj) {
   const protos = Object.getPrototypeOf(obj);
   for (const [key, value] of Object.entries(protos)) {

@@ -1,5 +1,7 @@
-import { app, BrowserWindow } from 'electron'
-import path from 'node:path'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import path from 'node:path';
+import {appExpress} from '../server/app';
+
 
 // The built directory structure
 //
@@ -10,11 +12,11 @@ import path from 'node:path'
 // │ │ ├── main.js
 // │ │ └── preload.js
 // │
+appExpress.listen(appExpress.get('port'), () => console.log(`Server running on port ${appExpress.get('port')}`));
 process.env.DIST = path.join(__dirname, '../dist')
 process.env.VITE_PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, '../public')
 
-
-let win: BrowserWindow | null = null
+let win: BrowserWindow | null
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 
@@ -22,15 +24,15 @@ function createWindow() {
   win = new BrowserWindow({
     transparent: true,
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
-    maxWidth: 1280,
-    minWidth: 900,
-    maxHeight: 730,
-    minHeight: 650,
+    width: 1024,
+    height: 720,
+    resizable: false,
     frame: false, // Quita el marco de la ventana predeterminado de Electron
     titleBarStyle: 'hidden', // Oculta la barra de título predeterminada de Electron
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true
+      preload: path.join(__dirname, '../dist-electron/preload.js'),
+      nodeIntegration: true,
+      contextIsolation: true,
     },
   })
 
@@ -42,24 +44,20 @@ function createWindow() {
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
   } else {
-    
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'))
 
-    // Minimizar la ventana cuando se haga clic en el botón de minimizar
-    const minimizeBtn = document.getElementById('minimize-btn') as HTMLButtonElement;
-    minimizeBtn.addEventListener('click', () => {
-        win?.minimize();
-    });
-
-    // Cerrar la ventana cuando se haga clic en el botón de cerrar
-    const closeBtn = document.getElementById('close-btn') as HTMLButtonElement;
-    closeBtn.addEventListener('click', () => {
-        win?.close();
-    });
+    
   }
 }
 
+ipcMain.on('minimize-window', () => {
+  win?.minimize();
+});
+
+ipcMain.on('close-window', () => {
+  win?.close();
+});
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.

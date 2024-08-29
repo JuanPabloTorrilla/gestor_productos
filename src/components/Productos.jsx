@@ -26,8 +26,8 @@ export function Productos () {
     const filteredProductsMarca = products.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        const filteredProductsNombre = products.filter(product =>
-            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        const filteredProductsNombre = filteredProductsMarca.filter(product =>
+            product.description.toLowerCase().includes(searchTerm.toLowerCase())
             );
     return(
         <Box sx={{ alignItems:'flex-start',}}>
@@ -50,7 +50,7 @@ export function Productos () {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredProducts.map((product) => (
+                        {filteredProductsNombre.map((product) => (
                             <TableRow key={product.id} onClick={()=>asignar(product)} hover  style={{ cursor: 'pointer' }}>
                                 <TableCell sx={{paddingBottom:0, paddingTop:0}}>{product.id}</TableCell>
                                 <TableCell sx={{paddingBottom:0, paddingTop:0}}>{product.name}</TableCell>
