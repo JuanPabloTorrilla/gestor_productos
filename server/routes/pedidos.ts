@@ -15,14 +15,14 @@ const fetchPedidos = (async() => {
   }); 
 });
 
-const movimientoCaja = async ({tipo, importe, motivo, equipo, id_customer, saldo }: any) => {
+const addPedidos = async ({ id_product, quantity, date, total }: any) => {
   return new Promise((resolve, reject) => {
-    const query = 'INSERT INTO caja (tipo, importe, motivo, equipo, id_customer, saldo) VALUES (?, ?, ?, ?, ?, ?)';
-    db.run(query, [tipo, importe, motivo, equipo, id_customer, saldo], (err: any) => {
+    const query = 'INSERT INTO pedidos (id_product, quantity, date, total) VALUES (?, ?, ?, ?)';
+    db.run(query, [id_product, quantity, date, total], (err: any) => {
       if (err) {
         reject(err);
       } else {
-        resolve(console.log(`Movimiento de ${tipo} realizado correctamente`));
+        resolve(console.log(`Product ${id_product} added successfully`));
       }
     });
   });
@@ -40,8 +40,8 @@ router.get('/api/pedidos', async (req, res) => {
   router.post('/api/pedidos', async (req, res) => {
     console.log(req.body);
     try {
-      await movimientoCaja(req.body);
-      console.log('Movimiento de caja realizado correctamente');
+      await addPedidos(req.body);
+      console.log('Pedido realizado correctamente');
       res.sendStatus(201);
     } catch (error) {
       console.error('Error al realizar el movimiento:', error);

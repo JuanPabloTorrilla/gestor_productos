@@ -1,4 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import axios from 'axios';
+import { useSSE } from '../context/SseContext';
 
 export const ProductContext = createContext();
 
@@ -11,9 +13,32 @@ export const useProduct = () => {
 }
 
 export const ProductProvider = ({ children }) => {
+    const [products, setProducts] = useState([]);
     const [product, setProduct] = useState(null);
     const [modalAbierto, setModalAbierto] = useState(false);
     const [carritoAbierto, setCarritoAbierto] = useState(false);
+    const { updateEvents, deleteEvents } = useSSE();
+
+    const fetchProducts = async () => {
+        try {
+          const response = await axios.get('http://localhost:3002/api/products');
+          setProducts(response.data);
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        }
+      }
+    
+      useEffect(() => {
+        fetchProducts();
+      }, []);
+
+      useEffect(() => {
+        fetchProducts();
+      }, [updateEvents]);
+
+      useEffect(() => {
+        fetchProducts();
+      }, [deleteEvents]);
 
   // Función para abrir el modal del carrito
   const abrirCarrito = () => {
@@ -41,7 +66,7 @@ export const ProductProvider = ({ children }) => {
     }
 
     return (
-        <ProductContext.Provider value={{ product, asignar, modalAbierto, abrirModal, cerrarModal, carritoAbierto, abrirCarrito, cerrarCarrito}}>
+        <ProductContext.Provider value={{ products,product, asignar, modalAbierto, abrirModal, cerrarModal, carritoAbierto, abrirCarrito, cerrarCarrito}}>
             {children}
         </ProductContext.Provider>
     );

@@ -3,6 +3,7 @@ import {  Box, Container, List, ListItem,} from '@mui/material'
 import {Header} from './components/Header'
 import {Productos} from './components/Productos'
 import { ProductProvider } from './context/ProductContext'
+import { SSEProvider} from './context/SseContext'
 import { Detail } from './components/Detail'
 import { Actions } from './components/Actions'
 
@@ -18,6 +19,7 @@ const handleClose = () => {
 }; 
 
   return (
+    <SSEProvider>
     <ProductProvider>
       <div id="titlebar">
         <div id="titlebar-center">
@@ -48,6 +50,7 @@ const handleClose = () => {
             <p>Este software ha sido desarrollado por asdad. Para solicitar soluciones informáticas contáctese con asdas@asdasd.com</p>
       </Box>
     </ProductProvider>
+    </SSEProvider>
   );
 }
 

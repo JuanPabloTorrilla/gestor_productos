@@ -6,16 +6,15 @@ import bodyParser from 'body-parser';
 import {router} from './routes/index';
 import {product} from './routes/product';
 import {customer} from './routes/customer';
-import {caja} from './routes/caja';
 import {pedidos} from './routes/pedidos';
-
 import './eventController'
+
 export const appExpress = express()
 
 //Settings
-appExpress.set('port', process.env.PORT || 3001);
+appExpress.set('port', process.env.PORT || 3002);
 appExpress.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5174',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
@@ -33,7 +32,6 @@ appExpress.use((error: any, _req: any, res: any, _next: any) => {
 appExpress.use(router);
 appExpress.use('/api/products', product);
 appExpress.use('/api/customers', customer);
-appExpress.use('/api/caja', caja);
 appExpress.use('/api/pedidos', pedidos);
 
 
